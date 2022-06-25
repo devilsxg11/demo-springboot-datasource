@@ -11,15 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-/**
- * Copyright：dp.com
- * Author: SongXiaoGuang
- * Date: 2022/6/24.
- * Description:
- */
+import java.util.List;
+import java.util.Map;
+
 @RunWith(SpringRunner.class)
-@TestPropertySource("classpath:application.properties")
-@SpringBootTest(classes = {DsTest.class})
+@SpringBootTest(classes = {ApplicationMain.class})
 public class DsTest {
 
     private final Logger log= LoggerFactory.getLogger(DsTest.class);
@@ -29,11 +25,21 @@ public class DsTest {
 
     @Before
     public void before() {
-        System.out.println("单元测试开始");
     }
     @Test
     public void test() {
-        queryHandler.queryAll();
+
+        new Thread(() -> {
+            List<Map<String, Object>> list = queryHandler.queryAll();
+            System.out.println(list);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+
     }
 
 }
