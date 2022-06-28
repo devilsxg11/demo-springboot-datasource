@@ -14,9 +14,9 @@ public class QueryHandler {
     private JdbcTemplate jdbcTemplate;
 
 
-    public List<Map<String, Object>> queryAll(){
+    public List<Map<String, Object>> query(){
 
-        String sql = "select * from person";
+        String sql = "select * from test.person order by age,name desc limit 999900, 10;";
         List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql);
         return maps;
     }
@@ -25,6 +25,12 @@ public class QueryHandler {
 
         String sql = "select * from person where age > ?";
         List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql, minAge);
+        return maps;
+    }
+
+    public List<Map<String, Object>> queryBySex(int sex){
+        String sql = "select * from person where sex = ?";
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql, sex);
         return maps;
     }
 }
