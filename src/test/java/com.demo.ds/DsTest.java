@@ -41,11 +41,11 @@ public class DsTest {
     @Test
     public void test() throws Exception {
 
-        for(int i=0; i<1; i++){
+        for(int i=0; i<20; i++){
             pool.execute(() -> {
                 while (true){
                     long start = System.currentTimeMillis();
-                    List<Map<String, Object>> list = queryHandler.query();
+                    List<Map<String, Object>> list = queryHandler.queryGroupByName();
                     long end = System.currentTimeMillis();
                     log.info(Thread.currentThread().getName() + ", queryAll, count: {} 条, cost time: {} 毫秒", list.size(), end-start);
                     try {
@@ -57,7 +57,8 @@ public class DsTest {
             });
         }
 
-        Thread.sleep(5*60*1000);
+
+        Thread.sleep(50*60*1000);
     }
 
 }

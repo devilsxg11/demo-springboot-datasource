@@ -10,36 +10,37 @@ spring:
       username: root
       password: zoujinyuanma
       initialSize: 0
-      # 最小的空闲的connection数量
+      # 最小的空闲的连接数
       minIdle: 0
-      # maxActive 表示最大的active的connection数量，同时最多的数据库连接数
-      # 还有个参数 maxIdle 表示即使没有数据库连接时依然可以保持的空闲连接，而不被清除，随时处于待命状
+      # maxActive 表示最大的活跃连接数，同时支持最多的连接数
+      # 还有个参数 maxIdle，表示即使没有数据库连接时依然可以保持的空闲连接，而不被清除，随时处于待命状态
       maxActive: 2
       # 配置获取连接等待超时的时间
-      maxWait: 6000
+      maxWait: 600
       # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-      # 每timeBetweenEvictionRunsMillis毫秒秒检查一次连接池中空闲的连接,把空闲时间超过minEvictableIdleTimeMillis毫秒的连接断开,直到连接池中的连接数到minIdle为止
+      # 每 timeBetweenEvictionRunsMillis 毫秒秒检查一次连接池中空闲的连接,把空闲时间超过 minEvictableIdleTimeMillis 毫秒的连接断开,直到连接池中的连接数到 minIdle 为止
       timeBetweenEvictionRunsMillis: 3000
       # 配置一个连接在池中最小生存的时间，单位是毫秒
       minEvictableIdleTimeMillis: 3000
       # 在连接池返回连接给调用者前用来对连接进行验证的查询 SQL，要求为一条查询语句
       validationQuery: select 'x'
-      # 建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      # 建议配置为 true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于 timeBetweenEvictionRunsMillis，执行 validationQuery 检测连接是否有效。
       testWhileIdle: true
-      # 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+      # 申请连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能
       testOnBorrow: false
-      # 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+      # 归还连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能
       testOnReturn: false
-      # 打开PSCache，并且指定每个连接上PSCache的大小
+      # 打开PSCache，并且指定每个连接上 PSCache 的大小
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
-      #标记是否删除泄露的连接，如果连接超出removeAbandonedTimeout的限制，且该属性设置为 true，则连接被认为是被泄露并且可以被删除
-      remove-abandoned: true
+      #标记是否删除泄露的连接，如果连接超出 removeAbandonedTimeout 的限制，且该属性设置为 true，则连接被认为是被泄露并且可以被删除
+      removeAbandoned: true
       #设泄露的连接可以被删除的超时时间（秒），该值应设置为应用程序查询可能执行的最长时间
-      remove-abandoned-timeout-millis: 120
-      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      removeAbandonedTimeout: 5
+      logAbandoned: true
+      # 配置监控统计拦截的 filters，去掉后监控界面sql无法统计，'wall' 用于防火墙
       filters: stat,wall,slf4j
-      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 通过connectProperties属性来打开 mergeSql 功能；慢 SQL 记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       # 合并多个DruidDataSource的监控数据
       #useGlobalDataSourceStat: true
